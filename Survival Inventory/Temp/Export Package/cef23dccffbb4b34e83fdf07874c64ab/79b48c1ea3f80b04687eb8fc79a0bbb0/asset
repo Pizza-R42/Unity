@@ -1,0 +1,14 @@
+//This is used to create each new item
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+[CreateAssetMenu(menuName = "Inventory/Item")]
+public class Item_ : ScriptableObject
+{
+    public int itemID;
+    public string itemName;
+    public Sprite itemIcon;
+    public int stackSize;
+    
+}

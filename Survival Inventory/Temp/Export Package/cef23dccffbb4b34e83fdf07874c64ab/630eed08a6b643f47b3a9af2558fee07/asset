@@ -1,0 +1,70 @@
+//This script is attached to every UI slot oject
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class Slot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+{
+    Image itemImage;
+    Image slotImage;
+    TextMeshProUGUI amountTxt;
+    SlotHolder slotHold;
+    Sprite outline;
+    Sprite highlight;
+    int thisIndex; //-1 index when the slot is a picked up item
+    
+
+    //Used when first creating the slot from the inventory script
+    public virtual void setStuff(int i, SlotHolder _sh, Image _img, Image _outImage, TextMeshProUGUI _txt, Sprite _outline, Sprite _highOut){
+        thisIndex = i;
+        slotHold = _sh;
+        itemImage = _img;
+        slotImage = _outImage;
+        amountTxt = _txt;
+        outline = _outline;
+        highlight = _highOut;
+
+    }
+    //Sets the sprite and item amount text 
+    public virtual void setItemUI(Sprite _itmImg, int _amt){
+        itemImage.sprite = _itmImg;
+        if (_amt > 1){
+            amountTxt.text = "" +_amt;
+        } else{
+            amountTxt.text = "";
+        }
+        
+        itemImage.enabled = true;
+    }
+
+    //Clears sprite and text
+    public void removeItemUI(){
+        itemImage.sprite = null;
+        amountTxt.text = "";
+        itemImage.enabled = false;
+    }
+
+    //Mouse Hover
+    public void OnPointerEnter(PointerEventData eventData){
+        slotImage.sprite = highlight;
+    }
+    //Mouse Hover
+    public void OnPointerExit(PointerEventData eventData){
+        slotImage.sprite = outline;
+    }
+    //Mouse click on this slot
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left){
+            slotHold.MouseClicked(thisIndex);
+        }
+        if (eventData.button == PointerEventData.InputButton.Right){
+            slotHold.MouseRightClicked(thisIndex);
+        }
+        
+    }
+}

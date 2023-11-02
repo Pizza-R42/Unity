@@ -1,0 +1,38 @@
+//This script is used for the slot that is picked up from the inventory
+
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HeldSlot : MonoBehaviour
+{
+    Image itemImage;
+    TextMeshProUGUI amountTxt;
+    SlotHolder slotHold;
+    Canvas tempCan;
+    //Sets inital refrences
+    public void setStuff(SlotHolder _sh, Image _img, TextMeshProUGUI _txt)
+    {
+        slotHold = _sh;
+        itemImage = _img;
+        amountTxt = _txt;
+        
+        //Needed for mouse to see through the held object;
+        tempCan = gameObject.AddComponent<Canvas>();
+        tempCan.overrideSorting = true;
+        tempCan.sortingOrder = 1;
+    }
+    //Sets the sprite and text amount
+    public void setItemUI(Sprite _itmImg, int _amt){
+        itemImage.sprite = _itmImg;
+        if (_amt > 1){
+            amountTxt.text = "" +_amt;
+        } else{
+            amountTxt.text = "";
+        }
+        
+        itemImage.enabled = true;
+    }
+}
